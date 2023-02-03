@@ -112,6 +112,14 @@ namespace HidApiAdapter
             return HidApi.hid_read(m_DevicePtr, buff, Convert.ToUInt32(len));
         }
 
+        public int Read(byte[] buff, int len, int timeout_ms)
+        {
+            if (m_DevicePtr == IntPtr.Zero)
+                return 0;
+
+            return HidApi.hid_read_timeout(m_DevicePtr, buff, Convert.ToUInt32(len), timeout_ms);
+        }
+
         #region device info
 
         StringBuilder m_DeviceInfoBuffer = new StringBuilder(BUFFER_DEFAULT_SIZE);

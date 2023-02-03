@@ -60,12 +60,8 @@ namespace HidApiAdapter
                 return devices;
 
             hid_device_info deviceInfo =
-#if NET40
+
                 (hid_device_info)Marshal.PtrToStructure(devicesLinkedList, typeof(hid_device_info));
-#endif
-#if NETSTANDARD2_0
-                Marshal.PtrToStructure<hid_device_info>(devicesLinkedList);
-#endif
 
             devices.Add(new HidDevice(deviceInfo, devicesLinkedList));
 
@@ -74,12 +70,9 @@ namespace HidApiAdapter
                 var ptr = deviceInfo.next;
 
                 deviceInfo =
-#if NET40
+
                     (hid_device_info)Marshal.PtrToStructure(deviceInfo.next, typeof(hid_device_info));
-#endif
-#if NETSTANDARD2_0
-                    Marshal.PtrToStructure<hid_device_info>(deviceInfo.next);
-#endif
+
 
                 devices.Add(new HidDevice(deviceInfo, ptr));
             }
